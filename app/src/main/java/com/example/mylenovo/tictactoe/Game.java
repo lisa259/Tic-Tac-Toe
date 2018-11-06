@@ -69,4 +69,8 @@ public class Game {
         }
         return GameState.IN_PROGRESS;
     }
+
+    public boolean playerOnTurn() {
+        return playerOneTurn;
+    }
 }

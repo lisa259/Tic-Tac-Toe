@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     int[][] coordinate = {{2131165220, 2131165222, 2131165223}, {2131165224, 2131165225, 2131165226}, {2131165227, 2131165228, 2131165229}};
 //    Button button1 = (Button)findViewById(R.id.button1);
     Button button1, button2, button3, button4, button5, button6, button7, button8, button9;
+    TextView text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +29,12 @@ public class MainActivity extends AppCompatActivity {
         button7 = (Button)findViewById(R.id.button7);
         button8 = (Button)findViewById(R.id.button8);
         button9 = (Button)findViewById(R.id.button9);
+        text = (TextView)findViewById(R.id.text);
+        text.setText("Players X turn");
     }
 
     public void tileClicked(View view) {
+        // view = button clicked
         Button button = (Button) view;
         int id = view.getId();
 
@@ -43,9 +48,11 @@ public class MainActivity extends AppCompatActivity {
                             case CROSS:
                                 // do something
                                 button.setText("x");
+                                text.setText("Players O turn");
                                 break;
                             case CIRCLE:
                                 button.setText("o");
+                                text.setText("Players X turn");
                                 // do something
                                 break;
                             case INVALID:
@@ -55,6 +62,19 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+        }
+        if (game.won() == GameState.IN_PROGRESS) {
+                if (game.playerOnTurn() == true) {
+                    text.setText("Players X turn");
+                } else {
+                    text.setText("Players O turn");
+                }
+        } else if (game.won() == GameState.PLAYER_ONE) {
+            text.setText("Player X won!");
+        } else if (game.won() == GameState.PLAYER_TWO) {
+            text.setText("Player O won!");
+        } else if (game.won() == GameState.DRAW) {
+            text.setText("Draw!");
         }
     }
 
